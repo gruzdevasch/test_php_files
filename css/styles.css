@@ -1,0 +1,177 @@
+/* 
+    Created on : 21.03.2020, 12:48:29
+    Author     : anton
+*/
+html{
+    font-family: Arial, Helvetica, Geneva  sans-serif;
+
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%
+}
+body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-width: 320px;
+}
+* {
+    box-sizing: border-box;
+    -moz-border-box: border-box;
+}
+a{
+    color: #018ed4;
+    text-decoration: none;
+}
+
+a:active,
+a:hover {
+    outline-width: 0
+}
+
+textarea {
+    overflow: auto
+}
+
+.error {color: #FF0000;}
+
+form{
+    display: block;
+    width: 400px;
+    margin: 0 auto 0 30px;
+}
+
+form input, form textarea{
+    display: block;
+    width: 100%;
+    height: 50px;
+    max-height: 50px;
+    margin: 15px 0;
+    max-width: 100%;
+    padding-left: 10px;
+}
+
+.title{
+    padding-left: 30px
+}
+.controls{
+    padding: 10px 0;
+    padding-left: 30px;
+}
+
+.navigation{
+    padding: 10px 0;
+    padding-left: 30px;
+    height: auto;
+    width: auto;
+}
+
+.directory{
+    padding: 15px 15px;
+}
+
+.file, .folder {
+    display: inline-block;
+    width: 200px;
+    height: auto;
+    padding: 15px;
+    position: relative;
+    vertical-align: top;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
+.folder{
+    text-decoration: none;
+    color: #000;
+    
+}
+.file:hover, .folder:hover{
+    border-color: lightgray;
+    background-color: rgba(232, 232, 232, 0.5);
+}
+.icon{
+
+    width: auto;
+    height: 150px;
+    margin: 15px 0;
+}
+.file .tooltiptext,  .folder .tooltiptext{
+  visibility: hidden;
+ 
+    width: auto;
+    white-space: nowrap;
+  background-color: white;
+  color: #000;
+  font-size: 12px;
+  text-align: left;
+  padding: 5px;
+  border: 1px solid grey;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.file:hover .tooltiptext, .folder:hover .tooltiptext
+{
+  visibility: visible;
+}
+
+.control-icon {
+width: 50px;
+    margin: 10px;
+    position: relative;
+    height: 50px;
+    display: inline-block;
+}
+
+.control-icon .tooltiptext{
+  visibility: hidden;
+ 
+    width: auto;
+    white-space: nowrap;
+  background-color: white;
+  color: #000;
+  font-size: 12px;
+  text-align: left;
+  padding: 5px;
+  border: 1px solid grey;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+    bottom: -20px;
+  z-index: 1;
+}
+.control-icon:hover .tooltiptext
+{
+  visibility: visible;
+}
+
+.icon-folder{
+    background: url(../img/folder.png) center center no-repeat;
+    background-size: contain;
+}
+.icon-file{
+    background: url(../img/file.png) center center no-repeat;
+    background-size: contain;  
+}
+.icon-home{
+    background: url(../img/home.png) center center no-repeat;
+    background-size: contain;
+}
+.icon-back{
+    background: url(../img/back.png) center center no-repeat;
+    background-size: contain;
+}
+.icon-new-file{
+    background: url(../img/new_file.png) center center no-repeat;
+    background-size: contain;
+}
+.icon-new-folder{
+    background: url(../img/new_folder.png) center center no-repeat;
+    background-size: contain;
+}
+.icon-name{
+    text-align: center;
+}
