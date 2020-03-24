@@ -83,7 +83,7 @@
                 <option value="Review">Обзор</option>
                 <option value="Comment">Комментарий</option>
             </select>
-            <textarea name="data" type="text" placeholder="Содержимое"></textarea>
+            <textarea name="data" placeholder="Содержимое"></textarea>
             <input name="folder_ID"  type="hidden" value="<?php echo $parent; ?>"/>
             <input type="submit" value="Создать" />
         </form>

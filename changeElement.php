@@ -105,7 +105,7 @@
                 <option value="Review" <?= $cur_type == 'Review' ? ' selected="selected"' : ''; ?>>Обзор</option>
                 <option value="Comment" <?= $cur_type == 'Comment' ? ' selected="selected"' : ''; ?>>Комментарий</option>
             </select>
-            <textarea name="data" type="text" placeholder="Содержимое" ><?php if (isset($cur_data)) echo $cur_data ?></textarea>
+            <textarea name="data" placeholder="Содержимое" ><?php if (isset($cur_data)) echo $cur_data ?></textarea>
             <input name="folder_ID"  type="hidden" value="<?php echo $parent; ?>"/>
             <input name="ID"  type="hidden" value="<?php echo $id; ?>"/>
             <input type="submit" value="Сохранить" />

@@ -11,7 +11,7 @@ $(document).ready(function () {
             if (key == 'delete') {
 
                 $.ajax({
-                    url: 'delete.php',
+                    url: '/delete/',
                     type: 'POST',
                     processData: false,
                     contentType: false,
@@ -31,9 +31,9 @@ $(document).ready(function () {
 
             } else {
                 if (type === 'folder') {
-                    window.location.href = "/changeDir.php?id=" + id;
+                    window.location.href = "/changeFolder/" + id;
                 } else {
-                    window.location.href = "/changeElement.php?id=" + id;
+                    window.location.href = "/changeElement/" + id;
                 }
             }
             /*window.console && console.log(type + id) || alert(type + id);*/

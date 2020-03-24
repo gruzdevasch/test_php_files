@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["id"])) {
         $id = "";
     } else {
-        $id = test_input(filter_input(INPUT_POST, 'id'));
+        $id = (int) test_input(filter_input(INPUT_POST, 'id'));
     }
     include "config.php";
     $result = 0;

@@ -46,13 +46,8 @@
                         . "VALUES ('$name', '" . date('Y-m-d H:i:s') . "', '" . date('Y-m-d H:i:s') . "', '$description', $parent);");
 
                 mysqli_close($mysqli);
-                /* if ($result == true) {
-                  echo "<script>alert('Папка успешно создана.')</script>";
-                  } else {
-                  echo "<script>alert('Произошла ошибка! Попробуйте еще раз.')</script>";
-                  } */
                 if ($parent)
-                    header('Location: /index.php?folder=' . $parent);
+                    header('Location: /folder/' . $parent);
                 else
                     header('Location: /');
                 exit();
@@ -62,7 +57,7 @@
             if (is_numeric($folder) && $folder != 0) {
                 $parent = $folder;
                 if ($parent)
-                    $back_url = "/index.php?folder=" . $parent;
+                    $back_url = "/folder/" . $parent;
             }
         }
         ?>

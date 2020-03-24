@@ -31,7 +31,9 @@ a:hover {
 textarea {
     overflow: auto
 }
+label{display: block;
 
+    padding: 10px 0;}
 .error {color: #FF0000;}
 
 form{
@@ -40,12 +42,12 @@ form{
     margin: 0 auto 0 30px;
 }
 
-form input, form textarea{
+form input, form textarea, form select{
     display: block;
     width: 100%;
     height: 50px;
     max-height: 50px;
-    margin: 15px 0;
+    margin: 15px 0 0;
     max-width: 100%;
     padding-left: 10px;
 }
