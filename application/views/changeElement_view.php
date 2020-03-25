@@ -20,7 +20,7 @@
     <label for="data">Содержимое:
         <textarea name="data" placeholder="Содержимое" id='data' ><?php if (!empty($data['cur_data'])) echo $data['cur_data']?></textarea>
     </label>
-    <input name="folder_ID"  type="hidden" value="<?= $data['parent'] ?>"/>
+    <input name="directory_ID"  type="hidden" value="<?= $data['parent'] ?>"/>
     <input name="ID"  type="hidden" value="<?=$data['id']?>"/>
     <input type="submit" value="Изменить" />
 </form>

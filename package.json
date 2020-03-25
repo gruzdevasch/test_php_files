@@ -1,0 +1,29 @@
+{
+  "name": "htdocs",
+  "version": "1.0.0",
+  "description": "Для создания тестовых таблиц в базе есть файл testData.php. Настройки доступа к MySql в файле config.php.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack -p",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gruzdevasch/test_php_files.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gruzdevasch/test_php_files/issues"
+  },
+  "homepage": "https://github.com/gruzdevasch/test_php_files#readme",
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "jquery-contextmenu": "^2.9.0"
+  }
+}

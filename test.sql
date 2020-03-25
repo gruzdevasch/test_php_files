@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Мар 23 2020 г., 03:34
+-- Время создания: Мар 25 2020 г., 06:30
 -- Версия сервера: 10.4.11-MariaDB
 -- Версия PHP: 7.4.3
 
@@ -28,14 +28,13 @@ SET time_zone = "+00:00";
 -- Структура таблицы `directories`
 --
 
-DROP TABLE IF EXISTS `directories`;
 CREATE TABLE `directories` (
   `id` mediumint(9) NOT NULL,
   `name` char(30) NOT NULL,
   `creation_date` datetime NOT NULL,
   `modification_date` datetime NOT NULL,
   `description` text DEFAULT NULL,
-  `parent_id` int(11) DEFAULT NULL
+  `parent_id` mediumint(9) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -43,10 +42,9 @@ CREATE TABLE `directories` (
 --
 
 INSERT INTO `directories` (`id`, `name`, `creation_date`, `modification_date`, `description`, `parent_id`) VALUES
-(1, 'dir1', '2020-03-22 08:28:21', '2020-03-22 08:28:21', 'main directory', NULL),
-(2, 'dir2', '2020-03-22 08:28:21', '2020-03-22 08:28:21', 'second directory', NULL),
-(3, 'dir3', '2020-03-22 08:28:21', '2020-03-22 11:22:44', 'inside directory2', 1),
-(18, 'test2', '2020-03-22 10:35:44', '2020-03-22 11:22:28', '56722', NULL);
+(1, 'dir1', '2020-03-25 03:01:31', '2020-03-25 03:01:31', 'main directory', NULL),
+(2, 'dir2', '2020-03-25 03:01:31', '2020-03-25 03:01:31', 'second directory', NULL),
+(3, 'dir3', '2020-03-25 03:01:31', '2020-03-25 03:01:31', 'inside directory', 1);
 
 -- --------------------------------------------------------
 
@@ -54,10 +52,9 @@ INSERT INTO `directories` (`id`, `name`, `creation_date`, `modification_date`, `
 -- Структура таблицы `elements`
 --
 
-DROP TABLE IF EXISTS `elements`;
 CREATE TABLE `elements` (
   `id` mediumint(9) NOT NULL,
-  `directory_id` int(11) DEFAULT NULL,
+  `directory_id` mediumint(9) DEFAULT NULL,
   `name` char(30) NOT NULL,
   `creation_date` datetime NOT NULL,
   `modification_date` datetime NOT NULL,
@@ -70,12 +67,11 @@ CREATE TABLE `elements` (
 --
 
 INSERT INTO `elements` (`id`, `directory_id`, `name`, `creation_date`, `modification_date`, `type`, `data`) VALUES
-(1, NULL, 'el12', '2020-03-22 08:28:21', '2020-03-22 11:28:00', 'Article', 'lorum epsum'),
-(2, 1, 'el2', '2020-03-22 08:28:21', '2020-03-22 08:28:21', 'Article', 'test'),
-(3, 2, 'el3', '2020-03-22 08:28:21', '2020-03-22 08:28:21', 'Review', 'test'),
-(4, 3, 'el4', '2020-03-22 08:28:21', '2020-03-22 08:28:21', 'Comment', 'Element 4 content'),
-(5, 1, 'el5', '2020-03-22 08:28:21', '2020-03-22 08:28:21', 'Comment', 'Element 5 content'),
-(31, NULL, '123', '2020-03-22 10:55:00', '2020-03-23 03:01:44', 'News', '444');
+(1, NULL, 'el1', '2020-03-25 03:01:31', '2020-03-25 03:01:31', 'News', 'lorum epsum'),
+(2, 1, 'el2', '2020-03-25 03:01:31', '2020-03-25 03:01:31', 'Article', 'test'),
+(3, 2, 'el3', '2020-03-25 03:01:31', '2020-03-25 03:01:31', 'Review', 'test'),
+(4, 3, 'el4', '2020-03-25 03:01:31', '2020-03-25 03:01:31', 'Comment', 'Element 4 content'),
+(5, 1, 'el5', '2020-03-25 03:01:31', '2020-03-25 03:01:31', 'Comment', 'Element 5 content');
 
 --
 -- Индексы сохранённых таблиц
@@ -85,13 +81,15 @@ INSERT INTO `elements` (`id`, `directory_id`, `name`, `creation_date`, `modifica
 -- Индексы таблицы `directories`
 --
 ALTER TABLE `directories`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `parent_id` (`parent_id`);
 
 --
 -- Индексы таблицы `elements`
 --
 ALTER TABLE `elements`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `directory_id` (`directory_id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -101,13 +99,29 @@ ALTER TABLE `elements`
 -- AUTO_INCREMENT для таблицы `directories`
 --
 ALTER TABLE `directories`
-  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `elements`
 --
 ALTER TABLE `elements`
-  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `directories`
+--
+ALTER TABLE `directories`
+  ADD CONSTRAINT `directories_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `directories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `elements`
+--
+ALTER TABLE `elements`
+  ADD CONSTRAINT `elements_ibfk_1` FOREIGN KEY (`directory_id`) REFERENCES `directories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

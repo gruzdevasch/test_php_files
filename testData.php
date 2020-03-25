@@ -1,6 +1,6 @@
 <?php
 
-include "config.php";
+include "application/model/config.php";
 $mysqli->query("SET FOREIGN_KEY_CHECKS = 0;");
 if (!$mysqli->query("DROP TABLE IF EXISTS Directories") ||
         !$mysqli->query("CREATE TABLE Directories (

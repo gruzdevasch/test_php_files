@@ -17,6 +17,6 @@
     <label for="data">Содержимое:
         <textarea name="data" placeholder="Содержимое" id='data'></textarea>
     </label>
-    <input name="folder_ID"  type="hidden" value="<?= $data['parent'] ?>"/>
+    <input name="directory_ID"  type="hidden" value="<?= $data['parent'] ?>"/>
     <input type="submit" value="Создать" />
 </form>

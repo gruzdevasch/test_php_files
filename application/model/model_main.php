@@ -9,49 +9,48 @@ function test_input($data) {
 
 class Model_Main extends Model {
 
-    public function get_data($folder_id = null) {
+    public function getObjects($directory_id = null) {
         include "config.php";
         $root = "/";
         $back_url = $root;
-        $folder = null;
-        if (!empty($folder_id)) {
-            $folder = $folder_id;
-            if (is_numeric($folder)) {
-                $res = $mysqli->query("SELECT id, parent_id FROM Directories where id = " . $folder . "");
+        $directory = null;
+        if (!empty($directory_id)) {
+            $directory = $directory_id;
+            if (is_numeric($directory)) {
+                $res = $mysqli->query("SELECT id, parent_id FROM Directories where id = " . $directory . "");
                 $res->data_seek(0);
                 $total = 0;
                 while ($row = $res->fetch_assoc()) {
                     if ($row['parent_id'])
-                        $back_url = "//{$_SERVER['HTTP_HOST']}{$root}folder/" . $row['parent_id'];
-
+                        $back_url = "//{$_SERVER['HTTP_HOST']}{$root}directory/" . $row['parent_id'];
                     $total++;
                 }
                 if (!$total)
-                    $folder = 0;
+                    $directory = 0;
                 mysqli_free_result($res);
             } else
-                $folder = 0;
+                $directory = 0;
         }
-        if ($folder)
-            $res = $mysqli->query("SELECT * FROM Directories WHERE parent_id = " . $folder . " ORDER BY id ASC");
+        if ($directory)
+            $res = $mysqli->query("SELECT * FROM Directories WHERE parent_id = " . $directory . " ORDER BY id ASC");
         else
             $res = $mysqli->query("SELECT * FROM Directories WHERE parent_id is NULL ORDER BY id ASC");
 
-// Папки
+        // Папки
         $items = Array();
-        $folders = Array();
+        $directories = Array();
         $res->data_seek(0);
         while ($row = $res->fetch_assoc()) {
-            $url = "//{$_SERVER['HTTP_HOST']}{$root}folder/" . $row['id'];
+            $url = "//{$_SERVER['HTTP_HOST']}{$root}directory/" . $row['id'];
             $escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
             $row['url'] = $escaped_url;
-            $folders[] = $row;
+            $directories[] = $row;
         }
-        if ($folder)
-            $res2 = $mysqli->query("SELECT * FROM Elements WHERE directory_id = " . $folder . " ORDER BY id ASC");
+        if ($directory)
+            $res2 = $mysqli->query("SELECT * FROM Elements WHERE directory_id = " . $directory . " ORDER BY id ASC");
         else
             $res2 = $mysqli->query("SELECT * FROM Elements WHERE directory_id is NULL ORDER BY id ASC");
-// Элементы
+        // Элементы
         $res2->data_seek(0);
         while ($row = $res2->fetch_assoc()) {
             $items[] = $row;
@@ -60,17 +59,17 @@ class Model_Main extends Model {
         mysqli_free_result($res);
         mysqli_free_result($res2);
 
-// Закрываем соединение
+        // Закрываем соединение
         mysqli_close($mysqli);
         return array(
             'back_url' => $back_url,
-            'folder' => $folder,
+            'directory' => $directory,
             'items' => $items,
-            'folders' => $folders
+            'directories' => $directories
         );
     }
 
-    public function create_element($parent_id = null) {
+    public function createElement($directory_id = null) {
         $nameErr = "";
         $parent = "NULL";
         $back_url = "/";
@@ -94,8 +93,8 @@ class Model_Main extends Model {
             $type = test_input(filter_input(INPUT_POST, 'type'));
         }
 
-        if (!empty($_POST['folder_ID'])) {
-            $parent = test_input(filter_input(INPUT_POST, 'folder_ID'));
+        if (!empty($_POST['directory_ID'])) {
+            $parent = test_input(filter_input(INPUT_POST, 'directory_ID'));
         }
         if (empty($nameErr)) {
             include "config.php";
@@ -106,7 +105,7 @@ class Model_Main extends Model {
             mysqli_close($mysqli);
 
             if ($parent != 'NULL')
-                header('Location: /folder/' . $parent);
+                header('Location: /directory/' . $parent);
             else
                 header('Location: /');
             exit();
@@ -115,7 +114,7 @@ class Model_Main extends Model {
             $back_url = '/';
             if (!empty($parent)) {
                 if (is_numeric($parent) && $parent != 0) {
-                    $back_url = "/folder/" . $parent;
+                    $back_url = "/directory/" . $parent;
                 }
             }
             $data = Array('parent' => $parent, 'back_url' => $back_url, 'err' => $nameErr);
@@ -123,7 +122,7 @@ class Model_Main extends Model {
         }
     }
 
-    public function create_folder() {
+    public function createDirectory() {
 
         $nameErr = "";
         $parent = "NULL";
@@ -155,7 +154,7 @@ class Model_Main extends Model {
 
             mysqli_close($mysqli);
             if ($parent != 'NULL')
-                header('Location: /folder/' . $parent);
+                header('Location: /directory/' . $parent);
             else
                 header('Location: /');
             exit();
@@ -164,7 +163,7 @@ class Model_Main extends Model {
             $back_url = '/';
             if (!empty($parent)) {
                 if (is_numeric($parent) && $parent != 0) {
-                    $back_url = "/folder/" . $parent;
+                    $back_url = "/directory/" . $parent;
                 }
             }
             $data = Array('parent' => $parent, 'back_url' => $back_url, 'err' => $nameErr);
@@ -172,7 +171,7 @@ class Model_Main extends Model {
         }
     }
 
-    public function get_element_data($id) {
+    public function getElementData($id) {
         $data = Array();
         $parent = "";
         $id = (int) test_input($id);
@@ -188,7 +187,7 @@ class Model_Main extends Model {
             $parent = $row['directory_id'];
             $data['parent'] = $parent;
             if ($parent)
-                $data['back_url'] = "/folder/" . $parent;
+                $data['back_url'] = "/directory/" . $parent;
             else
                 $data['back_url'] = "/";
         }
@@ -196,7 +195,7 @@ class Model_Main extends Model {
         return $data;
     }
 
-    public function get_folder_data($id) {
+    public function getDirectoryData($id) {
         $data = Array();
         $parent = "";
         $id = (int) test_input($id);
@@ -211,7 +210,7 @@ class Model_Main extends Model {
             $parent = $row['parent_id'];
             $data['parent'] = $parent;
             if ($parent)
-                $data['back_url'] = "/folder/" . $parent;
+                $data['back_url'] = "/directory/" . $parent;
             else
                 $data['back_url'] = "/";
         }
@@ -219,7 +218,7 @@ class Model_Main extends Model {
         return $data;
     }
 
-    public function change_element($id = null) {
+    public function changeElement($id = null) {
         $nameErr = "";
         $id = "";
         $content = "";
@@ -247,8 +246,8 @@ class Model_Main extends Model {
             $type = test_input(filter_input(INPUT_POST, 'type'));
         }
 
-        if (!empty($_POST['folder_ID'])) {
-            $parent = test_input(filter_input(INPUT_POST, 'folder_ID'));
+        if (!empty($_POST['directory_ID'])) {
+            $parent = test_input(filter_input(INPUT_POST, 'directory_ID'));
         }
         if (!empty($_POST['ID'])) {
             $id = test_input(filter_input(INPUT_POST, 'ID'));
@@ -265,14 +264,14 @@ class Model_Main extends Model {
             mysqli_close($mysqli);
 
             if ($parent)
-                header('Location: /folder/' . $parent);
+                header('Location: /directory/' . $parent);
             else
                 header('Location: /');
             exit();
         } else {
             if (!empty($parent)) {
                 if (is_numeric($parent) && $parent != 0) {
-                    $back_url = "/folder/" . $parent;
+                    $back_url = "/directory/" . $parent;
                 }
             }
             $data = Array('parent' => $parent, 'back_url' => $back_url, 'err' => $nameErr);
@@ -284,7 +283,7 @@ class Model_Main extends Model {
         }
     }
 
-    public function change_folder($id = null) {
+    public function changeDirectory($id = null) {
         $nameErr = "";
         $id = "";
         $description = "";
@@ -320,14 +319,14 @@ class Model_Main extends Model {
             mysqli_close($mysqli);
 
             if ($parent)
-                header('Location: /folder/' . $parent);
+                header('Location: /directory/' . $parent);
             else
                 header('Location: /');
             exit();
         } else {
             if (!empty($parent)) {
                 if (is_numeric($parent) && $parent != 0) {
-                    $back_url = "/folder/" . $parent;
+                    $back_url = "/directory/" . $parent;
                 }
             }
             $data = Array('parent' => $parent, 'back_url' => $back_url, 'err' => $nameErr);
@@ -338,7 +337,7 @@ class Model_Main extends Model {
         }
     }
 
-    public function delete_object() {
+    public function deleteObject() {
         if (empty($_POST["type"])) {
             $type = "";
         } else {
@@ -350,10 +349,10 @@ class Model_Main extends Model {
         } else {
             $id = (int) test_input(filter_input(INPUT_POST, 'id'));
         }
-        include "config.php";
         $result = 0;
+        include "config.php";
         if (!empty($id)) {
-            if ($type == "folder") {
+            if ($type == "directory") {
                 $result = $mysqli->query("DELETE FROM Directories WHERE id ='$id'");
             } else {
                 $result = $mysqli->query("DELETE FROM Elements WHERE id='$id'");

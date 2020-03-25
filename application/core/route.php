@@ -6,19 +6,19 @@ class Route {
         // контроллер и действие по умолчанию
         $controller_name = 'Main';
         $action_name = 'index';
-        $folder = "";
+        $directory = "";
 
         $routes = explode('/', $_SERVER['REQUEST_URI']);
 
         // получаем имя контроллера
-        /* if (!empty($routes[1]) && $routes[1] != "folder") {
+        /* if (!empty($routes[1]) && $routes[1] != "directory") {
           $controller_name = $routes[1];
           } */
         // получаем имя экшена
         if (!empty($routes[1])) {
             if (!empty($routes[2])) {
                     $action_name = $routes[1];
-                $folder = (int) htmlspecialchars(urldecode($routes[2]));
+                $directory = (int) htmlspecialchars(urldecode($routes[2]));
             } else {
                 $action_name = $routes[1];
             }
@@ -51,7 +51,7 @@ class Route {
         if (method_exists($controller, $action)) {
             // вызываем действие контроллера
 
-            $controller->$action($folder);
+            $controller->$action($directory);
         } else {
             // здесь также разумнее было бы кинуть исключение
             Route::ErrorPage404();

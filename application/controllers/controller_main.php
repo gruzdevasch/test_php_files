@@ -7,64 +7,64 @@ class Controller_Main extends Controller {
         $this->view = new View();
     }
 
-    function action_index($folder = 0) {
-        $data = $this->model->get_data($folder);
+    function action_index($directory = 0) {
+        $data = $this->model->getObjects($directory);
         $this->view->generate('main_view.php', 'template_view.php', $data, 'Главная');
     }
 
-    function action_folder($folder = 0) {
-        $data = $this->model->get_data($folder);
+    function action_directory($directory = 0) {
+        $data = $this->model->getObjects($directory);
         $this->view->generate('main_view.php', 'template_view.php', $data, 'Раздел');
     }
 
-    function action_addFolder($folder = 0) {
+    function action_addDirectory($directory = 0) {
         $data = Array();
         $back_url = '/';
         $parent = null;
-        if (!empty($folder)) {
-            if (is_numeric($folder) && $folder != 0) {
-                $parent = $folder;
+        if (!empty($directory)) {
+            if (is_numeric($directory) && $directory != 0) {
+                $parent = $directory;
                 if ($parent)
-                    $back_url = "/folder/" . $parent;
+                    $back_url = "/directory/" . $parent;
             }
         }
         $data = Array('parent' => $parent, 'back_url' => $back_url);
-        $this->view->generate('addFolder_view.php', 'template_view.php', $data, 'Создание раздела');
+        $this->view->generate('addDirectory_view.php', 'template_view.php', $data, 'Создание раздела');
     }
 
-    function action_createFolder() {
+    function action_createDirectory() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $data = $this->model->create_folder();
-            $this->view->generate('addFolder_view.php', 'template_view.php', $data, 'Создание раздела');
+            $data = $this->model->createDirectory();
+            $this->view->generate('addDirectory_view.php', 'template_view.php', $data, 'Создание раздела');
         } else {
             echo 'Произошла ошибка. Попробуйте еще раз!';
         }
     }
     
     
-    function action_changeFolder($id = 0) {
-        $data = $this->model->get_folder_data($id);
-        $this->view->generate('changeFolder_view.php', 'template_view.php', $data, 'Изменение раздела');
+    function action_changeDirectory($id = 0) {
+        $data = $this->model->getDirectoryData($id);
+        $this->view->generate('changeDirectory_view.php', 'template_view.php', $data, 'Изменение раздела');
     }
 
-    function action_alterFolder() {
+    function action_alterDirectory() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $data = $this->model->change_folder();
-            $this->view->generate('changeFolder_view.php', 'template_view.php', $data, 'Изменение раздела');
+            $data = $this->model->changeDirectory();
+            $this->view->generate('changeDirectory_view.php', 'template_view.php', $data, 'Изменение раздела');
         } else {
             echo 'Произошла ошибка. Попробуйте еще раз!';
         }
     }
 
-    function action_addElement($folder = 0) {
+    function action_addElement($directory = 0) {
         $data = Array();
         $back_url = '/';
         $parent = null;
-        if (!empty($folder)) {
-            if (is_numeric($folder) && $folder != 0) {
-                $parent = $folder;
+        if (!empty($directory)) {
+            if (is_numeric($directory) && $directory != 0) {
+                $parent = $directory;
                 if ($parent)
-                    $back_url = "/folder/" . $parent;
+                    $back_url = "/directory/" . $parent;
             }
         }
         $data = Array('parent' => $parent, 'back_url' => $back_url);
@@ -73,7 +73,7 @@ class Controller_Main extends Controller {
 
     function action_createElement() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $data = $this->model->create_element();
+            $data = $this->model->createElement();
             $this->view->generate('addElement_view.php', 'template_view.php', $data, 'Создание элемента');
         } else {
             echo 'Произошла ошибка. Попробуйте еще раз!';
@@ -81,13 +81,13 @@ class Controller_Main extends Controller {
     }
     
     function action_changeElement($id = 0) {
-        $data = $this->model->get_element_data($id);
+        $data = $this->model->getElementData($id);
         $this->view->generate('changeElement_view.php', 'template_view.php', $data, 'Изменение элемента');
     }
 
     function action_alterElement() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $data = $this->model->change_element();
+            $data = $this->model->changeElement();
             $this->view->generate('changeElement_view.php', 'template_view.php', $data, 'Изменение элемента');
         } else {
             echo 'Произошла ошибка. Попробуйте еще раз!';
@@ -96,7 +96,7 @@ class Controller_Main extends Controller {
 
     function action_delete() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $data = $this->model->delete_object();
+            $data = $this->model->deleteObject();
         } else {
             echo 'Произошла ошибка. Попробуйте еще раз!';
         }

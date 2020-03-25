@@ -1,7 +1,9 @@
+var $ = require("jquery");
+var contextmenu = require('jquery-contextmenu') ;
 $(document).ready(function () {
     $.contextMenu({
-        selector: '.folder, .file',
-        callback: function (key, options) {
+        selector: '.directory, .element',
+        callback: (key, options) => {
             var element = this;
             var type = $(this).prop('class').split(' ')[0];
             var id = $(this).prop('id');
@@ -17,7 +19,7 @@ $(document).ready(function () {
                     contentType: false,
                     dataType: "text",
                     data: data,
-                    success: function (response) {
+                    success: (response) => {
                         if (response == 1) {
                             $(element).fadeOut(800, function () {
                                 $(this).remove();
@@ -30,8 +32,8 @@ $(document).ready(function () {
                 });
 
             } else {
-                if (type === 'folder') {
-                    window.location.href = "/changeFolder/" + id;
+                if (type === 'directory') {
+                    window.location.href = "/changeDirectory/" + id;
                 } else {
                     window.location.href = "/changeElement/" + id;
                 }
